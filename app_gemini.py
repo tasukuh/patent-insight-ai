@@ -108,7 +108,7 @@ def summarize_patent_with_gemini(text, api_key):
     """Gemini APIで特許を要約し、構造化データを生成"""
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('models/gemini-1.0-pro-latest')
         
         # テキストが長すぎる場合は先頭部分のみ使用
         max_chars = 30000  # Geminiは長文に強いので多めに設定
@@ -170,9 +170,9 @@ def generate_embeddings_with_gemini(text, api_key):
         text_to_embed = text[:max_chars] if len(text) > max_chars else text
         
         result = genai.embed_content(
-            model="models/embedding-001",
-            content=text_to_embed,
-            task_type="retrieval_document"
+    model="models/text-embedding-004",
+    content=text_to_embed,
+    task_type="retrieval_document"
         )
         
         return result['embedding']
@@ -186,7 +186,7 @@ def generate_trend_report_with_gemini(selected_patents, api_key):
     """Gemini APIで選択された特許から戦略的トレンドレポートを生成"""
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('models/gemini-1.0-pro-latest')
         
         patents_summary = "\n\n".join([
             f"【特許{i+1}】\n"
